@@ -1,0 +1,15 @@
+/* Styling for the login form */
+.login-form {
+    margin-top: 55px;
+    width: 400px !important;
+    background-color: #363D57;
+    border-radius: 7px !important;
+    height: 425px;
+
+}
+
+.forgot-password{
+    color: white;
+    height: auto;
+    font-size: large;
+}
