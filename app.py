@@ -4,7 +4,6 @@ from EliteOrders import create_app
 from EliteOrders.events import socketio
 # assign a variable to store create_app
 # Import the SocketIO class from the flask_socketio module
-from flask_socketio import SocketIO
 from engineio.async_drivers import threading
 app = create_app()
 
