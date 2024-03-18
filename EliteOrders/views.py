@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 # Import the RequestEntityTooLarge exception from the werkzeug.exceptions module
 from werkzeug.exceptions import RequestEntityTooLarge
 import os
-
+from decimal import Decimal
 # import models from .models
 from .models import Item,Orderitem,Order
 # import db from __init__.py
@@ -13,7 +13,7 @@ from . import db
 
 import datetime
 
-from sqlalchemy import and_,func
+from sqlalchemy import and_,func,desc,asc
 
 # Import specific functions and objects from the flask_login module
 from flask_login import login_user,login_required,current_user
@@ -43,7 +43,20 @@ def menu():
             # Check if form data is present in the request
             if request.form:
                 # Extract form data
-                item_name = request.form.get("item-name").title()  # Capitalize the first letter in the item name
+                item_name = request.form.get("item-name")  # Capitalize the first letter in the item name
+
+                if len(item_name.split(" "))>1:
+                    temp=""
+                    for i in item_name.split(" "):
+                        try:
+                            temp = temp+i[0][0].upper()+i[1:]+" "
+                        except IndexError:
+                            pass
+                    item_name = temp
+                else:
+                    item_name = item_price[0].upper() +" "+item_name[1:] 
+
+              
                 item_img = request.files['item_img']
                 item_cost = request.form.get("item-cost")
                 item_price = request.form.get("item-price")
@@ -62,13 +75,15 @@ def menu():
                 if item_cost == item_price:
                     flash("Error: Item cost cannot be equal to the item price. Please adjust the values accordingly.")
                     return redirect(url_for("views.menu"))
-                elif int(item_cost)>int(item_price):
+                
+                elif Decimal(item_cost)>Decimal(item_price):
                     flash("Error: Item price should be greater than the item cost. Please adjust the values accordingly.")
                     return redirect(url_for("views.menu"))
+    
                 # Check if all required form fields are not empty
                 elif item_name and item_cost and item_price and item_img:
                     # Create a new Item object with the extracted form data
-                    item = Item(name=item_name, img=item_img.filename, cost=item_cost, price=item_price)
+                    item = Item(name=item_name, img=secure_filename(item_img.filename), cost=item_cost, price=item_price)
                     # Add the new item to the database session
                     db.session.add(item)
                     # Commit the changes to the database
@@ -91,7 +106,7 @@ def menu():
         except RequestEntityTooLarge :
             flash("Error: Image file size exceeds limit. Please upload a smaller file.")
     # Query the Item table to retrieve all items where is_deleted is False
-    item = Item.query.filter(Item.is_deleted==False).all()
+    item = Item.query.filter(Item.is_deleted == False).order_by(asc(Item.name)).all()
 
     # Render the "menu.html" template and passing items to the templates (this will be rendered by jinja)
     return render_template("menu.html",items=item)
@@ -114,7 +129,7 @@ def counter():
         # Redirect the user to the login page
         return redirect(url_for("auth.login"))
     # Query items that are not deleted from the database
-    item = Item.query.filter(Item.is_deleted == False).all()
+    item = Item.query.filter(Item.is_deleted == False).order_by(asc(Item.name)).all()
     # Render the counter.html template with the queried items
     return render_template("counter.html", items=item)
 
@@ -168,7 +183,9 @@ def invoice():
         return redirect(url_for("auth.login"))
 
      # Retrieve all orders from the database
-    orders = Order.query.all() 
+    orders = Order.query.all()
+    # orders = Order.query.order_by(desc(Order.date)).order_by(desc(Order.order_no)).all() 
+ 
     orderitems=[] # List to store order items
     items=[] # List to store items
 
