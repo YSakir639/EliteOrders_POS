@@ -1,0 +1,65 @@
+.menu-form{
+    background: #363D57;
+    border-radius: 7px;
+    height: 86vh;
+
+}
+body{
+    overflow-y: auto !important;
+}
+form{
+    color: white;
+    padding: 25px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.add-dish-button{
+    width: 55%;
+    /* height: 100px !important; */
+    border-radius:  7px 7px  !important;
+    background-color: #FFE662 !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.dish-icon{
+    width: 55%;
+    margin: auto;
+}
+#create-btn{
+    width: 80%;
+    height: 50px;
+    background-color: #8DFF70;
+    border: none;
+    margin-top: 20%;
+}
+.add-icon{
+    height: 40px;
+}
+
+
+#dish-selected-img{
+    width: 100%;
+    height: 9rem ;
+    border-radius: 7px 7px 0 0;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.card-img{
+    height: 9rem;
+    border-radius: 0 !important;
+}
+
+.delete-badge{
+    background-color: #CC0000 !important;
+    width: 30%;
+    height: 30%;
+    border-radius:  0 0 7px 0  !important;
+}
+
+
+

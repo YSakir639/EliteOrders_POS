@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block title %}Analytics Dashboard{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='analytics.css') }}"> <!-- linked CSS file for analytics -->
+{% endblock %}
+{% block content %}
+<div class="container-fluid p-3">
+    <div class="row g-2">
+        <div class="logs-win d-flex align-items-center p-5">
+
+            <div class="col logs d-flex align-items-center justify-content-center">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{figures[0]}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Orders Received Today</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col logs d-flex align-items-center justify-content-center">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">£{{figures[1]}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"> Revenue By Cash</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col logs d-flex align-items-center justify-content-center">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">£{{figures[2]}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Revenue By Card</h6>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="col logs d-flex align-items-center justify-content-center">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">£{{figures[3]}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Discount Amount</h6>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col logs d-flex align-items-center justify-content-center">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">£{{figures[4]}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Today's Gross Revenue</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col logs d-flex align-items-center justify-content-center">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">£{{figures[5]}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Today's Net Profit</h6>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class=" py-3">
+
+        <div class="row  gx-3">
+            <div class="col-7" >
+                <div class="graphs-win" ><canvas id="customerTrendChart"></canvas></div>
+            </div>
+            <div class="col" >
+                <div  class="graphs-win " >  
+                    <div><h4 class="text-center">Top Item Sales</h3></div>
+                    <div  class="d-flex justify-content-center align-items-center"style="margin-top:20px;"> <canvas id="topItemSalesChart" height="450" ></canvas></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+// Initialize empty arrays to store background colors and border colors for the chart
+const backgroundColors = [];
+const borderColors = [];
+// Generate random background and border colors for each label
+// Loop through each item name in the item_names list provided by Jinja (from backend)
+for (let i = 0; i < {{item_names | length}}; i++) {
+    const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.5)`;
+    backgroundColors.push(randomColor);// Add the random color to the background colors array
+    borderColors.push(randomColor); // Add the random color to the border colors array
+}
+
+// Define the data object for the chart
+const topItemSalesData = {
+    labels: {{ item_names | safe }},
+    datasets: [{
+        label: 'Top Item Sales', // Label for the dataset
+        data: {{ item_sales | safe}},  // Use the provided item sales data from Jinja backend
+        backgroundColor: backgroundColors, // Use the generated background colors
+        borderColor: borderColors, // Use the generated border colors
+        borderWidth: 1
+    }]
+};
+
+// Options for the chart
+const chartOptions = {
+    responsive: true, // Make the chart responsive to window size changes
+    maintainAspectRatio: false, // Do not maintain aspect ratio for the chart
+    title: {
+        display: true, // Display the chart title
+        text: 'Top Item Sales' // Set the chart title
+    },
+    plugins:{
+        legend: {
+         display: false
+        }
+       }
+};
+
+// Get the canvas element for the chart
+const ctx = document.getElementById('topItemSalesChart').getContext('2d');
+
+// Create the doughnut chart
+const topItemSalesChart = new Chart(ctx, {
+    type: 'doughnut', // Set the chart type to doughnut
+    data: topItemSalesData, // Set the chart data
+    options: chartOptions, // Set the chart options
+
+    
+});
+
+</script>
+
+<script>
+const dates = {{ dates | safe }}; // Extracted dates data from Flask backend in a safe manner
+const customerCount = {{ customers | safe }}; // Extracted customers data from Flask backend in a safe manner
+
+// Line chart
+const cvx = document.getElementById('customerTrendChart').getContext('2d');
+const customerTrendChart = new Chart(cvx, {
+  type: 'line',  //  the chart type as line
+  data: {   // Define the data for the chart
+    labels: dates,
+    datasets: [{
+      label: 'Customer Trend',
+      data: customerCount,
+      borderColor: 'rgba(54, 162, 235, 1)',
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderWidth: 2,
+      pointRadius: 4,
+      pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+      pointBorderColor: 'rgba(54, 162, 235, 1)',
+      pointHoverRadius: 6,
+      pointHoverBackgroundColor: 'rgba(54, 162, 235, 1)',
+      pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    title: {
+      display: true,
+      text: 'Customer Trend Over Time'
+    },
+    scales: {
+      xAxes: [{
+        type: 'time',
+        time: {
+          unit: 'day'
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'Date'
+        }
+      }],
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Number of Customers'
+        },
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  }
+});
+
+</script>
+
+
+{% endblock %}
+

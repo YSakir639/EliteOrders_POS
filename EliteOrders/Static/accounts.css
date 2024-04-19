@@ -1,0 +1,18 @@
+/* Style for the create account window */
+.create-account-win{
+    background: #363D57;
+    height: 80vh;
+    border-radius: 15px ;
+    /* margin-top: vh; */
+    /* padding: 70px; */
+}
+/* Style for the users window */
+.users-win{
+    background: #F55A51;
+    height: 80vh;
+    border-radius: 15px ;
+}
+.form-control{
+    height: 5vh !important;
+}
+

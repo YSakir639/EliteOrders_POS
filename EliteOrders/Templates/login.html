@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}"> <!-- linked CSS file for login -->
+{% endblock %}
+{% block content %}
+<div class="container  login-form py-3 px-3 ">
+  <form method="post" class="row d-flex justify-content-center" >
+    <div class="col-12 py-2">
+        <h1 class="text-center" style="color: white;height:8vh;"><strong>Login</strong></h1>
+    </div>
+    <div class="col-11 py-2 " >
+      <input type="email" class="form-control" placeholder="Email Address" name="email" style="height: 50px;">
+    </div>
+    <div class="col-11 py-2">
+        <input type="password" class="form-control" placeholder="Password" name="password" style="height: 50px;">
+    </div>
+    <div class="col-12 py-2 text-center">
+      <div  class="form-text forgot-password" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Forgot Password?</div>
+  </div>
+    <div class="col-12 text-center">
+        <button type="sumbit" class="btn btn-primary btn-lg " style="background:#51f55f;border:none;width:60%;margin-top:20px;">Login</button>
+    </div>
+
+<!-- popup -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Forgot Password?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Please contact the Restaurant owner to reset your password.
+      </div>
+
+    </div>
+  </div>
+</div>
+    <!-- popup -->
+  </form>
+</div>
+{% endblock %} 
+
+

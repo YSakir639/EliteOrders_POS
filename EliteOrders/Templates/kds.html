@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block CSS %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='kds.css') }}"> <!-- linked CSS file for KDS -->
+{% endblock %}
+
+{% block title %}KDS{% endblock %} <!-- Define a block named "title" -->
+{% block content %}  <!-- Define a block named "content" -->
+
+<div class="container-fluid px-2 ">
+    <div class="row  row-cols-5 gx-2 gy-2  " style="margin: 10px 0;">
+        <!-- Start iterating over each order and its associated items -->
+        {% for order,items in data %}
+            <div class="col " id="{{order.order_no}}">
+                <div class=" kds-main">
+                    <nav class="nav">
+                        <div class="container d-flex justify-content-between align-items-center">
+                            <p>#{{order.order_no}}</p>
+                            <p class="elapsed-time">00:00</p>
+                            <script>
+                                // Function to run the script
+                                function run(){
+                                    // "receivedtime" variable stores the time of order from Order table using jinja engine
+                                    let receivedtime="{{order.time}}"
+                                    // Destructuring hours, minutes, and seconds from the received time 
+                                    let [hours, minutes, seconds] = receivedtime.split(':');
+                                    // created a new Date object and stored into recivedtime variable
+                                    receivedtime = new Date();
+                                    // Set the hours, minutes, seconds, and milliseconds of receivedtime 
+                                    receivedtime.setHours(parseInt(hours), parseInt(minutes), parseInt(seconds), 0);
+                                    // Function to update elapsed time
+                                    function update_time(receivedtime,elapsed_time){
+                                        // Get the current time
+                                        let currentTime = new Date();
+                                        // Calculate elapsed time since received time
+                                        let elapsedTime = currentTime - receivedtime;
+                                        // Calculate minutes from elapsed time
+                                        let minutes = Math.floor(elapsedTime / (1000 * 60));
+                                        
+                                        // Update background color if elapsed time is greater than or equal to 25 minutes
+                                        if(minutes>=2){
+                                        elapsed_time.closest('.nav').style.setProperty('background', '#EF5555', 'important');
+                                        };
+                                        
+                                        // Calculate seconds from elapsed time
+                                        let seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+                                        // Format elapsed time as "mm:ss"
+                                        let formattedElapsedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                                        // Update the content of elapsed_time with formatted elapsed time
+                                        elapsed_time.innerHTML = formattedElapsedTime;
+                                    }
+                                    // Get the element before the current script tag
+                                let elapsed_time = document.currentScript.previousElementSibling
+                                // Execute function "update_time" every second to update elapsed time
+                                setInterval(() => update_time(receivedtime,elapsed_time), 1000);
+                            };run();
+                            </script>
+                        </div>
+                    </nav>
+                <!-- Display notes if they exist for the order -->
+                {% if order.notes %}
+                    <div class="notes-win">
+                        <p class="text-start kds-notes">{{order.notes}}</p>
+                    </div>
+                {% endif %}
+                <!-- Table to display items for the order -->
+                <table class="table ">
+                    <tbody style="margin: auto;">
+                <!-- Loop through items associated with the order -->
+                        {% for item in items %}
+                        <tr>
+                            <!-- Display item quantity -->
+                            <th scope="row">X{{item[1]}}</th>
+                            <!-- Display item name -->
+                            <td>{{item[0]}}</td>
+                        </tr>
+                        {% endfor %}
+                   
+                    </tbody>
+                </table>
+                <!-- Button to indicate order readiness -->
+                <button type="button" class="btn btn-primary ready-btn " >Ready</button>
+            </div>
+        </div>
+        
+        {% endfor %}
+
+
+
+
+
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" 
+        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous">
+</script>
+<script src="{{ url_for('static', filename='kds.js') }}"></script>  <!-- linked a JS file for KDS -->
+{% endblock %} <!-- End of the "content" block -->
+
+

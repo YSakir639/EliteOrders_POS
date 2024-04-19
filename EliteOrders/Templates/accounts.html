@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Accounts{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='accounts.css') }}"> <!-- linked CSS file for account -->
+{% endblock %}
+{% block content %}
+<div class="container  ">
+    <div class="row d-flex justify-content-center  " style="margin-top:40px;">
+        <div class="col-7 ">
+
+            <div class="container create-account-win p-5">
+                <form class="row gy-3" style="width:100%;height:auto;" method="post">
+                    <div class="col-12">
+                        <h1 style="color: #F55A51;font-weight:350;margin-top:2vh;font-size:3vw"><strong>Create Account</strong></h1>
+                    </div>
+                    <div class="col-7">
+                        <select class="form-select form-control" name="role" required aria-placeholder="ww">
+                            <option value="" disabled selected hidden>Role</option>
+                            <option value="Chef">Chef</option>
+                            <option value="Counter Staff">Counter Staff</option>
+                          </select>
+                    </div>
+                    <div class="col-6"><input type="text" class="form-control" placeholder="First name"name="firstname" required></div>
+                    <div class="col-6"><input type="text" class="form-control" placeholder="Last name" name="lastname"></div>
+                    <div class="col-8"><input type="email" class="form-control" placeholder="Email Address" name="email" required></div>
+                    <div class="col-7"><input type="tel" class="form-control" placeholder="Phone Number" name="phonenumber" required></div>
+                    <div class="col-7"><input type="password" class="form-control" placeholder="Password" name="password" required></div>
+                    <div class="col-7"><input type="password" class="form-control" placeholder="Confirm Password" name="confirmpassword" required></div>
+                    <div class="col-7">
+                        <button type="sumbit" class="btn btn-primary btn-lg " style="background:#F55A51;border:none;">Create Account</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="col-4">
+
+            <div class="container users-win px-4 py-3" style="overflow-y: auto;">
+                <div class="row gy-2">
+                    {% for user in users %} <!-- This loop iterates over each user in the users list. -->
+                    <div class="card " id="{{user.id}}" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
+                        <div class="card-body "  >
+                            <img src="{{ url_for('static', filename='delete-user-icon.png') }}" class="position-absolute d-flex align-items-center" alt="Delete" 
+                            style="width: 10%;right: 0;" id="delete-user">
+                         <p class="card-subtitle " > {{user.role}} </p>
+                          <h5 class="card-title">{{user.firstName}} {{user.lastName}} </h5>
+                          <h6 class="card-subtitle mb-2 " > {{user.email}} {{user.phonenumber}}</h6>
+                         
+                        </div>
+                      </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+    integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+    crossorigin="anonymous"></script>
+<script>
+      // Initialize socket connection
+    socket = io();
+
+    // Add click event listeners to delete user icons
+    document.querySelectorAll('#delete-user').forEach(function(icon) {
+    icon.addEventListener('click', function() {
+        // Get the parent element's parent element (which is the user card)
+        var card = icon.parentElement.parentElement;
+        // Extract the user ID from the card's ID attribute
+        var id = card.id;
+        // Emit a socket event to delete the user with the corresponding ID
+        socket.emit('delete-user', { id: id });
+        // Remove the user card from the DOM
+        card.remove();
+    });
+});
+
+
+</script>
+{% endblock %}
+

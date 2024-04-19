@@ -1,0 +1,24 @@
+.graphs-win{
+    background: rgb(255, 255, 255);
+    height: 65vh;
+    border-radius: 7px;
+    padding: 10px;
+
+}
+.logs-win{
+    background: rgb(255, 255, 255);
+    width: 100%;
+    height: 20vh;
+    border-radius: 7px;
+
+}
+
+
+.card{
+    border: none !important;
+}
+.card-body{
+    background-color: #ecf1f4 !important;
+}
+
+

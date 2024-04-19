@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Invoices{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='invoice.css') }}"> <!-- linked CSS file for Invoice -->
+{% endblock %}
+{% block content %}
+<div class="container-fluid  py-3 px-2">
+
+  <div class="invoice-win ">
+    <table class="table invoice-table">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Time</th>
+          <th scope="col">Order No</th>
+          <th scope="col">Ordered Items</th>
+          <th scope="col">Payment Method</th>
+          <th scope="col">Discount</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order,orderitems,items in data %}<!-- Loop through orders, order items, and items -->
+        <tr><!-- Display order details -->
+          <td>{{order.date}}</td>
+          <td>{{order.time}}</td>
+          <td style="width: 7%;">#{{order.order_no}}</td>
+          <td style="width:40% ">
+            {% for i in range(orderitems | length -1) %} 
+            {{ orderitems[i].item_qty }}x {{items[i].name}},<!-- Display quantity and name of each item -->
+            {% endfor %}
+          </td>
+          <td style="width: 10%;">{{order.payment_method}}</td>
+          <td>{{order.discount}}%</td>
+          <td>£{{order.total}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+

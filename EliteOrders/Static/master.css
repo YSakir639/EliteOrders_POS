@@ -1,0 +1,86 @@
+/* Reset styles for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    outline: none;
+    font-family: "Inter", sans-serif;
+    /* font-optical-sizing: auto; */
+    /* font-weight: <weight>; */
+    /* font-style: normal; */
+    /* font-variation-settings:"slnt" 0; */
+    /* font-family: inter; */
+
+}
+/* default background color to the body element */
+body {
+    background: #F0E8E6 !important;
+}
+/* Styling for the navbar */
+.navbar {
+    width: 85%;
+    background: #F55A51;
+    margin: 0 auto;
+    border-radius: 0 0 7px 7px;
+    overflow: hidden;
+	position: -webkit-sticky !important;
+	position: sticky !important;
+	top: 0 !important;
+}
+
+
+/* Styling for menu-win for menu.html , counter.html*/
+.menu-win {
+    border-radius: 7px;
+    height: 86vh;
+    background: white; 
+    overflow-y:auto;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.menu-win::-webkit-scrollbar {
+    width: 10px;
+    margin-right: 10px;
+    background: transparent;
+}
+.menu-win::-webkit-scrollbar-thumb {
+    border-radius: 7px;
+    background: #444444;
+  }
+
+/* Styling for card-main for menu.html , counter.html*/
+.card-main{
+    color: white !important;
+    background: #363D57 !important;
+}
+/* Styling for card-win for menu.html , counter.html*/
+.card-img{
+    height: 9rem;
+    border-radius: 0 !important;
+}
+
+/* Styles for navigation buttons and reset hover effects */
+
+.nav-btn, .nav-btn:hover{
+    background-color: #d74942 !important;
+    border: none !important;
+}
+/* Styles for logout button and reset hover effect */
+
+.logout-btn , .logout-btn:hover{
+    background-color:#363D57;
+    border: none !important;
+}
+
+#nav-title{
+    color: white !important;
+    font-weight: 400;
+
+}
+.navbar-brand,.navbar-brand:hover{
+    color: white;
+    font-weight: 270;
+    font-size: 25px;
+
+}

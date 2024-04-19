@@ -1,0 +1,132 @@
+/* Styles for counter.html */
+
+/* Styling for the orders window */
+.orders-win {
+    background: #363D57 !important;
+    height: 35vh;
+    border-radius: 7px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    overflow-y: scroll;
+}
+/* Hiding the scrollbar for the orders window */
+.orders-win::-webkit-scrollbar {
+    display: none;
+}
+/* Styling for table elements */
+th,tr,td{
+    color: rgb(255, 255, 255) !important;
+    background-color:  transparent !important;
+    border: none !important;
+    outline: none;
+  }
+
+
+/* Styling for the notes window */
+.notes-win {
+    background: #F1FF9D;
+    height: 15vh;
+    margin-top: 10px;
+    border-radius: 7px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 5px;
+}
+/* Styling for the summary window */
+.summary-win {
+    background: rgb(255, 255, 255);
+    height: 22vh;
+    margin-top: 10px;
+    border-radius: 7px ;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 10px;
+}
+
+/* Styling for the notes textarea */
+.notes-area{
+    background: transparent ;
+    border: none;
+    width: 100%;
+    height: 100%;
+    resize: none;
+}
+/* Styling for the discount input */
+#discount-input{
+    width: 100% !important;
+    border-radius: 7px;
+    border:none;
+    background:#DCDCDC	;
+    color: rgb(0, 0, 0);
+    font-size: 1vw;
+    user-select: none;
+}
+#discount-input:focus {
+    outline: none;
+  }
+/* Styling for clear button */
+.clearbtn{
+    height: 8vh;
+    width: 100%;
+    background: #F55A51 !important;
+    border: none !important;
+    font-size: 1vw;
+    font-weight:500;
+
+}
+
+/* Styling for confirm button */
+.confirmbtn{
+    height: 8vh;
+    width: 100%;
+    background: #36DA3C !important;
+    border: none !important;
+    font-size: 1.3vw;
+    font-weight:400;
+
+}
+
+/* Common styles for both cash and card buttons */
+.cash-btn,
+.card-btn {
+    width: 100%;
+    height: 15vh;
+    font-size: larger;
+    border: none;
+}
+/* Styling for cash button */
+.cash-btn {
+    background: #5967c3 !important;
+}
+/* Hover and focus effects for cash button */
+.cash-btn:hover,
+.cash-btn:focus {
+    background: #293480 !important;
+}
+/* Styling for card button */
+.card-btn {
+    background: rgb(239, 162, 53) !important;
+}
+/* Hover and focus effects for card button */
+.card-btn:hover,
+.card-btn:focus {
+    background: rgb(206, 139, 45) !important;
+}
+
+/* Styling for the discount button */
+#discount-btn{
+    background: #3c3c3c !important;
+    border: none;
+    margin-left: 10px;
+    width: 100%;
+    font-size: 1.2vw;
+}
+/* Remove default spin buttons for input[type="number"] */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Styling for the counter badge */
+.counter-badge{
+    background-color: #3CA346 !important;
+    border-radius: 5px !important;
+}

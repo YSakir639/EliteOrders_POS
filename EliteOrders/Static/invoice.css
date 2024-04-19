@@ -1,0 +1,22 @@
+/* Style for the invoice window */
+.invoice-win{
+    background: rgb(255, 255, 255);
+    height:85vh;
+    border-radius: 7px;
+    overflow-y:scroll ;
+}
+/* Style for table headers in the invoice table */
+.invoice-table th{
+    background: #EF83B0 !important;
+}
+
+
+.invoice-win::-webkit-scrollbar {
+    width: 10px;
+    margin-right: 10px;
+    background: transparent;
+}
+.invoice-win::-webkit-scrollbar-thumb {
+    border-radius: 7px;
+    background: #444444;
+  }

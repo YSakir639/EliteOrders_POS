@@ -1,0 +1,76 @@
+/* Styling for the ".kds-main" class */
+body{
+    height: 100vh;
+    overflow-y: auto !important;
+}
+body::-webkit-scrollbar {
+    width: 10px;
+    margin-right: 10px;
+    background: transparent;
+
+  }
+body::-webkit-scrollbar-thumb {
+    border-radius: 7px;
+    background: #444444;
+    display: block !important;
+    
+
+  }
+.kds-main{
+    background: #363D57;
+    height: 43vh;
+    padding: 0 !important;
+    border-radius: 7px !important;
+    overflow-y: scroll;
+    font-size: 1.2vw;
+
+}
+/* Hide the scrollbar for ".kds-main" in webkit browsers */
+.kds-main::-webkit-scrollbar {
+    display: none;
+}
+/* Styling for the ".nav" class */
+.nav{
+    width: 100%;
+    background: #4CBB17;
+    margin: 0 auto;
+    border-radius:  7px 7px 0 0;
+    height: 4vh;
+    color: white;
+    
+}
+/* Styling for the ".notes-win" class */
+.notes-win{
+    background: #F1FF9D;
+    width: 100%;
+    height: 10vh;
+    overflow-y: auto;
+
+}
+.notes-win::-webkit-scrollbar {
+    display: none;
+}
+/* Styling for table elements */
+th,tr,td{
+    color: rgb(255, 255, 255) !important;
+    background-color:  transparent !important;
+    border: none !important;
+    outline: none;
+    font-weight: 300;
+  }
+
+/* Styling for the ready button */
+.ready-btn{
+    background-color: #B6FF89 !important;
+    border: none !important;
+    color: black !important;
+    float: right;
+    margin-right: 10px;
+    font-size: 18px;
+    width: 100px;
+    font-weight:500;
+    width: 6.9vw;
+    font-size: 1.2vw;
+    margin-bottom: 10px;
+}
+

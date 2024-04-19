@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block CSS %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}"> <!-- linked CSS file for menu -->
+{% endblock %}
+
+{% block title %}Menu{% endblock %} <!-- Define a block named "title" -->
+{% block content %}  <!-- Define a block named "content" -->
+
+<div class="container-fluid  ">
+    <div class="row" style="margin: 10px auto">
+        <div class="col-4">
+            <div class="col-11 menu-form ">
+
+                <!-- form with method "post" and multipart/form-data encoding type -->
+                <form method="post" enctype="multipart/form-data" class="container-fluid " style="height: auto;" >
+                    <div class="row  p-3">
+                        <div class="col-12 text-center ">
+                            <input type="file" name="item_img" id="dish-img-file" style="display: none;" >
+                            <button type="button" class="text-center btn btn-primary btn-lg add-dish-button" id="dish-img-button" >
+                                 <!-- Jinja is used to dynamically generate the image source URL -->
+                                <img src="{{ url_for('static', filename='add-dish-icon.png') }}"  class="dish-icon">
+                            </button>
+                        </div>
+                        <div class="col-12" style="margin-top: 10px;"><label for="item-name">Item Name</label>
+                            <input type="text" class=" form-control " id="item-name" name="item-name"style="width: 90% ;" required>
+                        </div>
+                        <div class="col-4" style="margin-top: 10px;"><label for="item-cost">Cost</label>
+                            <input type="number" step="0.01" class="form-control" id="item-cost" name="item-cost" required >
+                        </div>
+                        <div class="col-4" style="margin-top: 10px;"><label for="item-price">Price</label>
+                            <input type="number" step="0.01" class="form-control" id="item-price" name="item-price" required>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary btn-lg" id="create-btn">
+                                 <!-- Jinja is used to dynamically generate the image source URL -->
+                                <img src="{{ url_for('static', filename='add-icon.png') }}" alt="" class="add-icon">
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="col-8 menu-win">
+            <div class="row gx-6 g-2 items" style="margin-top:5px;">
+                <!-- Jinja loop to iterate over each item in the 'items' list -->
+                <!-- this will generate html code for each item in the list -->
+                {%for item in items %}
+                    <div class="col-auto">
+                        <div class="card" style="width: 9.5rem;height:9rem;margin:0 0 !important;" id="{{item.id}}">
+                             <!-- Jinja is used to dynamically generate the image source URL -->
+                            <img class="card-img-top card-img" alt="Item Image" src="{{ url_for('views.serve_image', filename=item.img) }}">
+                            <span class="badge badge-light position-absolute delete-badge d-flex align-items-center justify-content-center " style="left: 0;">
+                            <!-- Jinja is used to generate the URL for the delete badge icon -->
+                            <img src="{{ url_for('static', filename='delete-badge-icon.png') }}" alt="Item Image" style="width: 22px;"></span>
+                            <div class="card-body card-main">
+                                 <!-- Jinja is used to insert the item name -->
+                                <p class="card-subtitle text-start" style="font-size: 12px;width:100vh;">{{item.name}}</p>
+                                <!-- Jinja is used to insert the item price -->
+                                <h6 class="card-subtitle text-sm">£{{item.price}}</h6>
+                             </div>
+                        </div>
+                    </div>
+                {% endfor %}
+              </div>
+        </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" 
+        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous">
+</script>
+
+<script src="{{ url_for('static', filename='menu.js') }}"></script>  <!-- linked a JS file for menu -->
+{% endblock %} <!-- End of the "content" block -->
+

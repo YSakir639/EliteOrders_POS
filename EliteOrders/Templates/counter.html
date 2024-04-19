@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block CSS %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='counter.css') }}"> <!-- linked CSS file for counter -->
+{% endblock %}
+
+{% block title %}Counter{% endblock %} <!-- Define a block named "title" -->
+{% block content %}  <!-- Define a block named "content" -->
+
+<div class="container-fluid  ">
+  <div class="row" style="margin: 20px auto"> 
+    <div class="col-8 menu-win"> 
+      <div class="row gx-6 g-2 items" style="margin-top:5px;">
+        {%for item in items %}
+        <div class="col-auto">
+          <div class="card" style="width: 9.5rem;height:9rem;margin:0 0 !important;" id="{{item.id}}">
+            <img class="card-img-top card-img" src="{{ url_for('views.serve_image', filename=item.img) }}"
+              alt="Item Image">
+            <span class="badge badge-light position-absolute counter-badge " style="right: 0;display:none;">0</span>
+            <div class="card-body card-main">
+              <p class="card-subtitle text-start" style="font-size: 12px;width:100vw;">{{item.name}}</p>
+              <h6 class="card-subtitle text-sm">£{{item.price}}</h6>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+      <div class="col-4">
+        <div class="col-11 orders-win">
+          <table class="table p-5" id="display-item">
+            <thead>
+              <tr>
+                <th scope="col">QTY</th>
+                <th scope="col">Item</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- rows are generated through JS-->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-11 notes-win" >
+          <textarea name="" id="notes" class="notes-area" placeholder="Notes:"></textarea>
+        </div>
+
+        <div class="col-11 summary-win position-relative">
+          <!-- <div class="row justify-content-end "> -->
+            <!-- <div class="col-5">
+              <h5><span id="total-items">0</span> items</h5>
+            </div> -->
+            <!-- <div class="col-7 " style="background-color: red !important;">
+              <h5 class="text-end">Subtotal: £<span id="sub-total">0.00</span></h5>
+              <div class="d-flex justify-content-end">
+                <h5>Discount: %</h5>
+                <input type="number" step="0.01" id="discount-input" placeholder="0.00" class="text-center">
+                <button type="button" class="btn btn-primary text-center" id="discount-btn">Apply</button>
+              </div>
+              <h2 class="position-absolute" style="bottom:10px;right:35px;">Total: £<span id="total">0.00</span></h2>
+            </div> -->
+
+
+          <!-- </div> -->
+          <div class="row" >
+            <div class="col">
+              <div class="row" >
+                <div class="col" ><h5><span id="total-items">0</span> items</h5></div>
+                <div class="col"><h5 class="text-end"style="font-size: 1.5vw;">Subtotal: £<span id="sub-total">0.00</span></h5></div>
+              </div>
+            </div>
+            <div class="col-12" >
+              <div class="row g-2">
+                <div class="col d-flex justify-content-end" ><h3 style="font-size: 1.5vw;">Discount:</h3></div>
+                <div class="col-3 d-flex justify-content-start" ><input type="number" step="0.01" id="discount-input" placeholder="%0.00" class="text-center"style="font-size: 1.2vw;" > </div>
+                <div class="col-3 d-flex justify-content-start" ><button type="button" class="btn btn-primary text-center " id="discount-btn">Apply</button></div>
+              </div>
+              </div>
+              
+             
+            <div class="col-12" ><h2 class="position-absolute" style="bottom:10px;right:35px;font-size:1.9vw;">Total: £<span id="total">0.00</span></h2></div>
+          </div>
+        </div>
+
+        <div class="col-11" style="margin-top: 10px;">
+          <div class="row">
+            <div class="col-4">
+              <button type="button" class="btn btn-primary clearbtn" id="clear-btn">Clear</button>
+            </div>
+            <div class="col" style="margin: auto;">
+              <button type="button" class="btn btn-primary confirmbtn" id="confirm-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Confirm Order</button>
+            </div>
+        </div>
+        <!-- popup -->
+        <div class="modal fade"   id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" 
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" >
+            <div class="modal-content " >
+              <div class="modal-header  ">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body gx-1">
+                <div class="row">
+                  <div class="col">
+                    <button type="button"  class="btn btn-primary btn-lg cash-btn" id="cash-btn">CASH</button>
+                  </div>
+                  <div class="col">
+                    <button type="button" class="btn btn-primary btn-lg card-btn" id="card-btn">CARD</button>
+                  </div>
+                </div>
+              </div>
+       
+            </div>
+          </div>
+        </div>
+        <!-- popup -->
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" 
+        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous">
+</script>
+<script src="{{ url_for('static', filename='counter.js') }}"></script>  <!-- linked a JS file for counter -->
+{% endblock %} <!-- End of the "content" block -->
+
