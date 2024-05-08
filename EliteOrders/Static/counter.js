@@ -1,7 +1,11 @@
+let pounds = Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+});
 // Initialize variables
-var subTotal = 0
-var totalItems = 0
-var total=0
+var subTotal = 0;
+var totalItems = 0;
+var total=0;
 var items = {} // Object to store the items
 
 // Event listener for clicking on items
@@ -60,10 +64,12 @@ document.querySelector('.items').addEventListener('click', function (event) {
         subTotal += parseFloat(item_price.innerHTML.substring(1))
         // Update the innerHTML of the element with the id "total" to display the updated subtotal.
         // this will make the total equal as subtotal until discount is applied
-        document.getElementById("total").innerHTML=subTotal;
+        // document.getElementById("total").innerHTML=subTotal;
+        document.getElementById("total").innerHTML=pounds.format(subTotal);
         total=subTotal
         // Update the innerHTML of the element with the id "sub-total" to display the updated subtotal after casting it as a float.
-        document.getElementById("sub-total").innerHTML = parseFloat(subTotal)
+        // document.getElementById("sub-total").innerHTML = parseFloat(subTotal);
+        document.getElementById("sub-total").innerHTML = pounds.format(subTotal);
         // increment totalitems by 1 (this represents the total items that the customers has ordered)
         totalItems += 1
         // Update the innerHTML of the element with the id "total-items" to display the updated total items count.
@@ -85,7 +91,8 @@ document.getElementById("discount-btn").addEventListener("click", function(event
     // Calculate total after applying discount
     total = subTotal - ((subTotal * discount) / 100);
     // Update total displayed on the webpage
-    document.getElementById("total").innerHTML = total;
+    // document.getElementById("total").innerHTML = total;
+    document.getElementById("total").innerHTML = pounds.format(total);
 });
 
 
